@@ -9,20 +9,27 @@
 </head>
 
 <body>
-    <div class="digit-container" draggable="true" id="digit-container" title="Double-click to show/hide seconds"
-        ondblclick="toggleShowSeconds()">
-        <img class="digit" id="digit-5" src="digits/0.gif" alt="hh-digit-1" />
-        <img class="digit" id="digit-4" src="digits/9.gif" alt="hh-digit-0" />
+    <div class="digit-container" draggable="true" id="digit-container">
+        <span id="hour-container" ondblclick="toggleChangeSize()" title="Double-click to change size">
+            <img class="digit" id="digit-5" src="digits/0m.gif" alt="hh-digit-1" />
+            <img class="digit" id="digit-4" src="digits/9m.gif" alt="hh-digit-0" />
+        </span>
 
-        <img class="digit" id="colon-1" src="digits/colon.gif" alt="mm-hh-colon" />
 
-        <img class="digit" id="digit-3" src="digits/4.gif" alt="mm-digit-1" />
-        <img class="digit" id="digit-2" src="digits/1.gif" alt="mm-digit-0" />
+        <img class="digit" id="colon-1" src="digits/colonm.gif" alt="mm-hh-colon" />
 
-        <img class="digit" id="colon-0" src="digits/colon.gif" alt="ss-mm-colon" />
+        <span id="minute-container" ondblclick="toggleShowSeconds()" title="Double-click to show/hide seconds">
+            <img class="digit" id="digit-3" src="digits/4m.gif" alt="mm-digit-1" />
+            <img class="digit" id="digit-2" src="digits/1m.gif" alt="mm-digit-0" />
+        </span>
 
-        <img class="digit" id="digit-1" src="digits/0.gif" alt="ss-digit-1" />
-        <img class="digit" id="digit-0" src="digits/0.gif" alt="ss-digit-0" />
+
+        <img class="digit" id="colon-0" src="digits/colonm.gif" alt="ss-mm-colon" />
+
+        <span id="second-container">
+            <img class="digit" id="digit-1" src="digits/0m.gif" alt="ss-digit-1" />
+            <img class="digit" id="digit-0" src="digits/0m.gif" alt="ss-digit-0" />
+        </span>
     </div>
 
     <script src="index.js"></script>

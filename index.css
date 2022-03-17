@@ -1,17 +1,19 @@
 .digit-container {
-    right: 5%;
-    display: flex;
+    top: 2%;
+    right: 2%;
     cursor: move;
     position: absolute;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .digit {
     /* preserve its original pixelated look  */
     image-rendering: pixelated;
-    height: 150px;
+    /* height: 150px; */
 }
 
 .digit-hidden {
-    height: 150px;
+    /* height: 150px; */
     display: none;
 }

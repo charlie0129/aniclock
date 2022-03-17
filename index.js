@@ -1,4 +1,5 @@
 let showSeconds = true;
+let size = 'm';
 
 // get digit images from document
 const elementArr = [];
@@ -32,12 +33,42 @@ function startTick() {
       elementArr[i].className = 'digit-hidden';
     } else {
       elementArr[i].className = 'digit';
-      elementArr[i].src = `digits/${currentDigit}.gif`;
+      elementArr[i].src = `digits/${currentDigit}${size}.gif`;
     }
 
   }
 
   setTimeout(startTick, 1000);
+}
+
+function toggleShowSeconds() {
+  showSeconds = !showSeconds;
+  if (!showSeconds) {
+    elementArr[0].className = 'digit-hidden';
+    elementArr[1].className = 'digit-hidden';
+    colonArr[0].className = 'digit-hidden';
+  } else {
+    elementArr[0].className = 'digit';
+    elementArr[1].className = 'digit';
+    colonArr[0].className = 'digit';
+  }
+}
+
+function toggleChangeSize() {
+  const prev = size;
+  if (size === 'm') {
+    size = 's';
+  } else {
+    size = 'm';
+  }
+
+  console.log("prev", prev, "size", size);
+
+  for (let i = 0; i < 6; i++) {
+    elementArr[i].src = elementArr[i].src.replace(/.\.gif$/, `${size}.gif`);
+  }
+  colonArr[0].src = colonArr[0].src.replace(/.\.gif$/, `${size}.gif`);
+  colonArr[1].src = colonArr[1].src.replace(/.\.gif$/, `${size}.gif`);
 }
 
 // make the clock div draggable
@@ -80,18 +111,5 @@ function dragElement(elmnt) {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
-  }
-}
-
-function toggleShowSeconds() {
-  showSeconds = !showSeconds;
-  if (!showSeconds) {
-    elementArr[0].className = 'digit-hidden';
-    elementArr[1].className = 'digit-hidden';
-    colonArr[0].className = 'digit-hidden';
-  } else {
-    elementArr[0].className = 'digit';
-    elementArr[1].className = 'digit';
-    colonArr[0].className = 'digit';
   }
 }
