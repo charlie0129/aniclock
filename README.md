@@ -19,4 +19,4 @@ I personally use it as a desktop widget with [Plash (macOS only)](https://github
 
 ---
 
->  Note: all the pictures of digits except the colon are taken from gelbooru.com
+>  Note: all the pictures of digits (except the colons) are from gelbooru.com or konachan.com
