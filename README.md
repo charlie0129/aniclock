@@ -12,7 +12,7 @@ Basically it looks like this (seconds can be hidden):
 
 I personally use it as a desktop widget with [Plash (macOS only)](https://github.com/sindresorhus/Plash):
 
-![macos-usage](readme-assets/macos-usage.gif)
+![macos-usage](readme-assets/macos-use-case.gif)
 
 
 
