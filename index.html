@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Aniclock" />
+    <title>Aniclock</title>
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="digit-container" draggable="true" id="digit-container" title="Double-click to show/hide seconds"
+        ondblclick="toggleShowSeconds()">
+        <img class="digit" id="digit-5" src="digits/0.gif" alt="hh-digit-1" />
+        <img class="digit" id="digit-4" src="digits/9.gif" alt="hh-digit-0" />
+
+        <img class="digit" id="colon-1" src="digits/colon.gif" alt="mm-hh-colon" />
+
+        <img class="digit" id="digit-3" src="digits/4.gif" alt="mm-digit-1" />
+        <img class="digit" id="digit-2" src="digits/1.gif" alt="mm-digit-0" />
+
+        <img class="digit" id="colon-0" src="digits/colon.gif" alt="ss-mm-colon" />
+
+        <img class="digit" id="digit-1" src="digits/0.gif" alt="ss-digit-1" />
+        <img class="digit" id="digit-0" src="digits/0.gif" alt="ss-digit-0" />
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        startTick();
+        dragElement(document.getElementById("digit-container"));
+    </script>
+</body>
+
+</html>

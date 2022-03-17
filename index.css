@@ -1,0 +1,15 @@
+.digit-container {
+    right: 5%;
+    display: flex;
+    cursor: move;
+    position: absolute;
+}
+
+.digit {
+    height: 150px;
+}
+
+.digit-hidden {
+    height: 150px;
+    display: none;
+}
