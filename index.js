@@ -115,7 +115,7 @@ function loadConfig() {
   }
 
   const config = JSON.parse(configStr);
-  console.log("load", config);
+  console.log("Loaded config:", config);
   showSeconds = config.showSeconds;
   size = config.size;
 
@@ -176,4 +176,4 @@ function dragElement(elmnt) {
 startTick(false);
 dragElement(digitContainer);
 loadConfig();
-//startTick(true);
+startTick(true);
