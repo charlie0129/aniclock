@@ -117,15 +117,13 @@ function loadConfig() {
   // otherwise the position will be incorrect 
   // since offsetRight needs to be calculated according to the image size
   const imagePromises = [];
-  elementArr.forEach((e) => {
-    imagePromises.push(new Promise((resolve) => {
-      e.onload = resolve;
-    }));
-  });
-  colonArr.forEach((e) => {
-    imagePromises.push(new Promise((resolve) => {
-      e.onload = resolve;
-    }));
+  const images = [...elementArr, ...colonArr];
+  images.forEach((e) => {
+    if (!e.complete) {
+      imagePromises.push(new Promise((resolve) => {
+        e.onload = resolve;
+      }));
+    }
   });
 
   Promise.all(imagePromises).then(() => {
