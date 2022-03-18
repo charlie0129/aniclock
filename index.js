@@ -13,7 +13,7 @@ const colonArr = [
   document.getElementById('colon-1'),
 ];
 
-function startTick() {
+function startTick(loop) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
   const timeStringTruncated = timeString.substring(0, timeString.lastIndexOf(':') + 3);
@@ -33,12 +33,14 @@ function startTick() {
       elementArr[i].className = 'digit-hidden';
     } else {
       elementArr[i].className = 'digit';
-      elementArr[i].src = `digits/${currentDigit}${size}.gif`;
+      elementArr[i].src = `digits/${size}/${currentDigit}.gif`;
     }
 
   }
 
-  setTimeout(startTick, 1000);
+  if (loop) {
+    setTimeout(() => { startTick(loop) }, 1000);
+  }
 }
 
 function toggleShowSeconds() {
@@ -55,20 +57,16 @@ function toggleShowSeconds() {
 }
 
 function toggleChangeSize() {
-  const prev = size;
   if (size === 'm') {
     size = 's';
   } else {
     size = 'm';
   }
 
-  console.log("prev", prev, "size", size);
+  colonArr[0].src = `digits/${size}/colon.gif`;
+  colonArr[1].src = `digits/${size}/colon.gif`;
 
-  for (let i = 0; i < 6; i++) {
-    elementArr[i].src = elementArr[i].src.replace(/.\.gif$/, `${size}.gif`);
-  }
-  colonArr[0].src = colonArr[0].src.replace(/.\.gif$/, `${size}.gif`);
-  colonArr[1].src = colonArr[1].src.replace(/.\.gif$/, `${size}.gif`);
+  startTick(false);
 }
 
 // make the clock div draggable
@@ -76,10 +74,10 @@ function toggleChangeSize() {
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id)) {
-    /* if present, the header is where you move the DIV from:*/
+    // if present, the header is where you move the DIV from:
     document.getElementById(elmnt.id).onmousedown = dragMouseDown;
   } else {
-    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    // otherwise, move the DIV from anywhere inside the DIV
     elmnt.onmousedown = dragMouseDown;
   }
 
