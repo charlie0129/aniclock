@@ -10,10 +10,8 @@
 .digit {
     /* preserve its original pixelated look  */
     image-rendering: pixelated;
-    /* height: 150px; */
 }
 
 .digit-hidden {
-    /* height: 150px; */
     display: none;
 }
