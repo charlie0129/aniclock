@@ -26,6 +26,19 @@ const colonArr = [
   document.getElementById('colon-1'),
 ];
 
+function getImagePromises() {
+  const imagePromises = [];
+  const images = [...elementArr, ...colonArr];
+  images.forEach((e) => {
+    if (!e.complete) {
+      imagePromises.push(new Promise((resolve) => {
+        e.onload = resolve;
+      }));
+    }
+  });
+  return imagePromises;
+}
+
 function startTick(loop) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
@@ -69,6 +82,7 @@ function toggleShowSeconds(isShowSeconds, updateConfig = true) {
 }
 
 function toggleChangeSize(desiredSize, updateConfig = true) {
+  console.log(desiredSize, updateConfig)
   if (desiredSize !== undefined) {
     size = desiredSize;
   } else {
@@ -86,7 +100,9 @@ function toggleChangeSize(desiredSize, updateConfig = true) {
   if (updateConfig) saveConfig();
 }
 
-function saveConfig() {
+async function saveConfig() {
+  await Promise.all(getImagePromises());
+
   const config = {
     showSeconds,
     size,
@@ -116,17 +132,7 @@ function loadConfig() {
   // only set position if all images have been loaded
   // otherwise the position will be incorrect 
   // since offsetRight needs to be calculated according to the image size
-  const imagePromises = [];
-  const images = [...elementArr, ...colonArr];
-  images.forEach((e) => {
-    if (!e.complete) {
-      imagePromises.push(new Promise((resolve) => {
-        e.onload = resolve;
-      }));
-    }
-  });
-
-  Promise.all(imagePromises).then(() => {
+  Promise.all(getImagePromises()).then(() => {
     // make sure the clock is inside the viewport
     if (config.left < vw && config.top < vh) {
       digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
