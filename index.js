@@ -26,29 +26,30 @@ const colonArr = [
   document.getElementById('colon-1'),
 ];
 
-function startTick(loop, updateAll = false) {
+function startTick(loop) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
   const timeStringTruncated = timeString.substring(0, timeString.lastIndexOf(':') + 3);
-  // remove colon from time string
-  const timeStringNoColon = timeStringTruncated.replaceAll(':', '');
-  // reverse it to match our digit order
-  const timeStringReversed = timeStringNoColon.split('').reverse().join('');
+  // remove colon from time string and reverse it to match our digit order
+  const timeStringNoColonReversed = timeStringTruncated.replaceAll(':', '').split('').reverse();
+
+  if (!showSeconds) {
+    timeStringNoColonReversed[0] = undefined;
+    timeStringNoColonReversed[1] = undefined;
+    colonArr[0].className = 'digit-hidden';
+  } else {
+    colonArr[0].className = 'digit';
+  }
 
   for (let i = 0; i < 6; i++) {
-    // skip seconds if not showing seconds
-    if ((!showSeconds && i < 2) || updateAll) {
-      continue;
-    }
 
-    const currentDigit = timeStringReversed[i];
+    const currentDigit = timeStringNoColonReversed[i];
     if (currentDigit === undefined) {
       elementArr[i].className = 'digit-hidden';
     } else {
       elementArr[i].className = 'digit';
       elementArr[i].src = `digits/${size}/${currentDigit}.gif`;
     }
-
   }
 
   if (loop) {
@@ -56,29 +57,18 @@ function startTick(loop, updateAll = false) {
   }
 }
 
-function toggleShowSeconds(isShowSeconds) {
-
+function toggleShowSeconds(isShowSeconds, updateConfig = true) {
   if (isShowSeconds !== undefined) {
     showSeconds = isShowSeconds;
   } else {
     showSeconds = !showSeconds;
   }
 
-  if (!showSeconds) {
-    elementArr[0].className = 'digit-hidden';
-    elementArr[1].className = 'digit-hidden';
-    colonArr[0].className = 'digit-hidden';
-  } else {
-    elementArr[0].className = 'digit';
-    elementArr[1].className = 'digit';
-    colonArr[0].className = 'digit';
-  }
-
   startTick(false);
-  saveConfig();
+  if (updateConfig) saveConfig();
 }
 
-function toggleChangeSize(desiredSize) {
+function toggleChangeSize(desiredSize, updateConfig = true) {
   if (desiredSize !== undefined) {
     size = desiredSize;
   } else {
@@ -93,7 +83,7 @@ function toggleChangeSize(desiredSize) {
   colonArr[1].src = `digits/${size}/colon.gif`;
 
   startTick(false);
-  saveConfig();
+  if (updateConfig) saveConfig();
 }
 
 function saveConfig() {
@@ -119,14 +109,35 @@ function loadConfig() {
   showSeconds = config.showSeconds;
   size = config.size;
 
-  // make sure the clock is inside the viewport
-  if (config.left < vw && config.top < vh) {
-    digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
-    digitContainer.style.top = `${config.top}px`;
-  }
+  // set once first to avoid initial size being unequal to actual size
+  toggleChangeSize(size, false);
+  toggleShowSeconds(showSeconds, false);
 
-  toggleChangeSize(size);
-  toggleShowSeconds(showSeconds);
+  // only set position if all images have been loaded
+  // otherwise the position will be incorrect 
+  // since offsetRight needs to be calculated according to the image size
+  const imagePromises = [];
+  elementArr.forEach((e) => {
+    imagePromises.push(new Promise((resolve) => {
+      e.onload = resolve;
+    }));
+  });
+  colonArr.forEach((e) => {
+    imagePromises.push(new Promise((resolve) => {
+      e.onload = resolve;
+    }));
+  });
+
+  Promise.all(imagePromises).then(() => {
+    // make sure the clock is inside the viewport
+    if (config.left < vw && config.top < vh) {
+      digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
+      digitContainer.style.top = `${config.top}px`;
+    }
+
+    toggleChangeSize(size, false);
+    toggleShowSeconds(showSeconds, false);
+  });
 }
 
 // make the clock div draggable
@@ -134,46 +145,45 @@ function loadConfig() {
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id)) {
-    // if present, the header is where you move the DIV from:
+    // if present, the header is where you move the div from
     document.getElementById(elmnt.id).onmousedown = dragMouseDown;
   } else {
-    // otherwise, move the DIV from anywhere inside the DIV
+    // otherwise, move the DIV from anywhere inside the div
     elmnt.onmousedown = dragMouseDown;
   }
 
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
-    // get the mouse cursor position at startup:
+    // get the mouse cursor position at startup
     pos3 = e.clientX;
     pos4 = e.clientY;
     document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
+    // call a function whenever the cursor moves
     document.onmousemove = elementDrag;
   }
 
   function elementDrag(e) {
     e = e || window.event;
     e.preventDefault();
-    // calculate the new cursor position:
+    // calculate the new cursor position
     pos1 = pos3 - e.clientX;
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    // set the element's new position:
+    // set the element's new position
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.right = (calculateDigitContainerOffsetRight() + pos1) + "px";
   }
 
   function closeDragElement() {
-    /* stop moving when mouse button is released:*/
+    // stop moving when mouse button is released
     document.onmouseup = null;
     document.onmousemove = null;
     saveConfig();
   }
 }
 
-startTick(false);
 dragElement(digitContainer);
 loadConfig();
 startTick(true);
