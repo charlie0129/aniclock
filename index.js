@@ -3,6 +3,17 @@ let size = 'm';
 
 const digitContainer = document.getElementById("digit-container");
 
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+function calculateDigitContainerOffsetRight(left) {
+  if (left === undefined) {
+    return vw - digitContainer.offsetLeft - digitContainer.offsetWidth;
+  }
+
+  return vw - left - digitContainer.offsetWidth;
+}
+
 // get digit images from document
 const elementArr = [];
 for (let i = 0; i < 6; i++) {
@@ -109,11 +120,8 @@ function loadConfig() {
   size = config.size;
 
   // make sure the clock is inside the viewport
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-
   if (config.left < vw && config.top < vh) {
-    digitContainer.style.left = `${config.left}px`;
+    digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
     digitContainer.style.top = `${config.top}px`;
   }
 
@@ -154,7 +162,7 @@ function dragElement(elmnt) {
     pos4 = e.clientY;
     // set the element's new position:
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    elmnt.style.right = (calculateDigitContainerOffsetRight() + pos1) + "px";
   }
 
   function closeDragElement() {
@@ -165,6 +173,7 @@ function dragElement(elmnt) {
   }
 }
 
+startTick(false);
 dragElement(digitContainer);
 loadConfig();
-startTick(true);
+//startTick(true);
