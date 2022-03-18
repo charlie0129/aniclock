@@ -1,6 +1,8 @@
 let showSeconds = true;
 let size = 'm';
 
+const digitContainer = document.getElementById("digit-container");
+
 // get digit images from document
 const elementArr = [];
 for (let i = 0; i < 6; i++) {
@@ -13,7 +15,7 @@ const colonArr = [
   document.getElementById('colon-1'),
 ];
 
-function startTick(loop) {
+function startTick(loop, updateAll = false) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
   const timeStringTruncated = timeString.substring(0, timeString.lastIndexOf(':') + 3);
@@ -24,7 +26,7 @@ function startTick(loop) {
 
   for (let i = 0; i < 6; i++) {
     // skip seconds if not showing seconds
-    if (!showSeconds && i < 3) {
+    if ((!showSeconds && i < 2) || updateAll) {
       continue;
     }
 
@@ -43,8 +45,14 @@ function startTick(loop) {
   }
 }
 
-function toggleShowSeconds() {
-  showSeconds = !showSeconds;
+function toggleShowSeconds(isShowSeconds) {
+
+  if (isShowSeconds !== undefined) {
+    showSeconds = isShowSeconds;
+  } else {
+    showSeconds = !showSeconds;
+  }
+
   if (!showSeconds) {
     elementArr[0].className = 'digit-hidden';
     elementArr[1].className = 'digit-hidden';
@@ -54,19 +62,63 @@ function toggleShowSeconds() {
     elementArr[1].className = 'digit';
     colonArr[0].className = 'digit';
   }
+
+  startTick(false);
+  saveConfig();
 }
 
-function toggleChangeSize() {
-  if (size === 'm') {
-    size = 's';
+function toggleChangeSize(desiredSize) {
+  if (desiredSize !== undefined) {
+    size = desiredSize;
   } else {
-    size = 'm';
+    if (size === 'm') {
+      size = 's';
+    } else {
+      size = 'm';
+    }
   }
 
   colonArr[0].src = `digits/${size}/colon.gif`;
   colonArr[1].src = `digits/${size}/colon.gif`;
 
   startTick(false);
+  saveConfig();
+}
+
+function saveConfig() {
+  const config = {
+    showSeconds,
+    size,
+    left: digitContainer.offsetLeft,
+    top: digitContainer.offsetTop,
+  };
+
+  localStorage.setItem('config', JSON.stringify(config));
+}
+
+function loadConfig() {
+  const configStr = localStorage.getItem('config');
+
+  if (!configStr) {
+    return;
+  }
+
+  const config = JSON.parse(configStr);
+  console.log("load", config);
+  showSeconds = config.showSeconds;
+  size = config.size;
+
+  // make sure the clock is inside the viewport
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+  if (config.left < vw && config.top < vh) {
+    digitContainer.style.left = `${config.left}px`;
+    digitContainer.style.top = `${config.top}px`;
+  }
+
+  toggleChangeSize(size);
+  toggleShowSeconds(showSeconds);
 }
 
 // make the clock div draggable
@@ -109,5 +161,10 @@ function dragElement(elmnt) {
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
+    saveConfig();
   }
 }
+
+dragElement(digitContainer);
+loadConfig();
+startTick(true);
