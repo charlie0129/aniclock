@@ -18,6 +18,8 @@ I personally use it as a desktop widget with [Plash (macOS only)](https://github
 
 - Double click hours to change size
 - Double click minutes to show/hide seconds
+- Drag to move around
+- Position, size, and visibility of seconds are preserved between reloads
 
 ---
 
