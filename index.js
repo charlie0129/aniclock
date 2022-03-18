@@ -82,7 +82,6 @@ function toggleShowSeconds(isShowSeconds, updateConfig = true) {
 }
 
 function toggleChangeSize(desiredSize, updateConfig = true) {
-  console.log(desiredSize, updateConfig)
   if (desiredSize !== undefined) {
     size = desiredSize;
   } else {
