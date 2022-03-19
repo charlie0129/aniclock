@@ -133,7 +133,7 @@ function loadConfig() {
   // since offsetRight needs to be calculated according to the image size
   Promise.all(getImagePromises()).then(() => {
     // make sure the clock is inside the viewport
-    if (config.left < vw && config.top < vh) {
+    if (0 < config.left && config.left < vw && 0 < config.top && config.top < vh) {
       digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
       digitContainer.style.top = `${config.top}px`;
     }
