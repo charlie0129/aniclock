@@ -7,23 +7,34 @@ Basically it looks like this:
 <p align="center" style="image-rendering: pixelated;">
   <img src="readme-assets/example.gif" />
 </p>
-> Some jagged lines are due to gif downscaling. It will not be present in the actual image.
+> Saw some black dots around straight lines? They are the artifacts of gif downscaling and will **not** be present in the actual image. However, I am not refering to the pixelated look of the image, which is intended.
+
+## Features
+
+- Double click hours to change styles (small or medium; static or animated).
+
+- Double click minutes to show/hide seconds.
+
+- Drag it to move around.
+
+- Optimized to use the lowest possible resources
+
+  > Although it barely uses any CPU with default settings (animated, showing seconds), if you want to lower CPU usage even further, use static (instead of animated) styles and hide seconds.
+
+- Position on screen, style, and visibility of seconds are preserved between reloads
 
 ## Possible use case
 
-I personally use it as a desktop widget with [Plash (macOS only)](https://github.com/sindresorhus/Plash):
+### macOS desktop widget
+
+I personally use it as a desktop widget with [Plash (available for macOS)](https://github.com/sindresorhus/Plash):
 
 <p align="center" style="image-rendering: pixelated;">
   <img src="readme-assets/macos-widget.gif" />
 </p>
-
-
-
-- Double click hours to change style
-- Double click minutes to show/hide seconds
-- Drag to move around
-- Position, size, and visibility of seconds are preserved between reloads
+For Windows users, try applications like Wallpaper Engine.
 
 ---
 
->  Note: all the pictures of digits (except the colons) are from gelbooru.com, konachan.com, and lolibooru.moe
+>  Note: all the pictures of digits (except the colons) are from [gelbooru](https://gelbooru.com), [konachan](https://konachan.com), and [lolibooru](https://lolibooru.moe).
+
