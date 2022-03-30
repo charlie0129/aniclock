@@ -1,16 +1,18 @@
 let showSeconds = true;
+
 // which digit style is used (is the index of `availableStyles`)
 let currentStyle = 0;
 
-// the following two consts are used to reduce refresh rate of digits
+// available styles, see in `digits/`
+const availableStyles = ['s-animated', 's-static', 'm-static'];
+
+// the following two consts are used to reduce refresh rate of digits (to optimize performance)
 // current time, array of digits, format: ssmmhh
 // '' stands for invisible digit
 const currentDigits = ['0', '0', '1', '4', '9', '0']
 // if the colons are visible. [0]: the one between ss and mm, [1]: the one between mm and hh
 const colonsVisible = [true, true];
 
-// available styles, see in `digits/`
-const availableStyles = ['s-animated', 's-static', 'm-static'];
 
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -234,15 +236,17 @@ const intervalId = setInterval(updateTime, 1000);
 //
 // *** this is a temporary fix ***
 //
-// because I noticed a increasing memory usage (possible a memory leak) from Plash Web Content
+// because I noticed a increasing memory usage (possibly a memory leak) from Plash Web Content, around 100MB/hour
 // still not sure if this is a bug or a feature (either of my code, or Plash, or the system webview itself)
-// (Plash v2.1.1, macOS 10.15.7, Safari 15.4)
+// (tested with Plash v2.1.1, macOS 10.15.7, Safari 15.4)
 //
-// it seems like *chromium-based* browsers are free of this problem from my initial testing
+// it seems like **chromium-based** browsers are free of this problem from my initial tests
 // although I haven't used this webpage with chromium-based browsers for extended periods of time.
 // to my knowledge, only webkit-based browsers are affected, i.e. the webview inside Plash
 //
-// i will update this if i find the cause of this memory problem
+// i will upload a proper fix if i can find the cause of this memory problem later
+// currently, with this fix, the memory usage of **all** Plash processes is like: highest: 180MB (after 1 hr), lowest: 50MB
+// (CPU usage is not affected, always very low. depending on your settings, varies from 0.2% to 2%)
 setTimeout(() => {
   window.location.reload();
 }, 3600000);
