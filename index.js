@@ -1,11 +1,16 @@
 let showSeconds = true;
-let size = 'm';
+// which digit style is used (is the index of `availableStyles`)
+let currentStyle = 0;
+
+// available styles, see in `digits/`
+const availableStyles = ['s-animated', 's-static', 'm-static'];
 
 const digitContainer = document.getElementById("digit-container");
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
+// calculate the offset right from offset left of the digit container
 function calculateDigitContainerOffsetRight(left) {
   if (left === undefined) {
     return vw - digitContainer.offsetLeft - digitContainer.offsetWidth;
@@ -61,7 +66,7 @@ function startTick(loop) {
       elementArr[i].className = 'digit-hidden';
     } else {
       elementArr[i].className = 'digit';
-      elementArr[i].src = `digits/${size}/${currentDigit}.gif`;
+      elementArr[i].src = `digits/${availableStyles[currentStyle]}/${currentDigit}.gif`;
     }
   }
 
@@ -81,19 +86,15 @@ function toggleShowSeconds(isShowSeconds, updateConfig = true) {
   if (updateConfig) saveConfig();
 }
 
-function toggleChangeSize(desiredSize, updateConfig = true) {
-  if (desiredSize !== undefined) {
-    size = desiredSize;
+function toggleChangeStyle(desiredStyle, updateConfig = true) {
+  if (desiredStyle !== undefined) {
+    currentStyle = desiredStyle;
   } else {
-    if (size === 'm') {
-      size = 's';
-    } else {
-      size = 'm';
-    }
+    currentStyle = (currentStyle + 1) % availableStyles.length;
   }
 
-  colonArr[0].src = `digits/${size}/colon.gif`;
-  colonArr[1].src = `digits/${size}/colon.gif`;
+  colonArr[0].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
+  colonArr[1].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
 
   startTick(false);
   if (updateConfig) saveConfig();
@@ -104,7 +105,7 @@ async function saveConfig() {
 
   const config = {
     showSeconds,
-    size,
+    currentStyle,
     left: digitContainer.offsetLeft,
     top: digitContainer.offsetTop,
   };
@@ -121,11 +122,11 @@ function loadConfig() {
 
   const config = JSON.parse(configStr);
   console.log("Loaded config:", config);
-  showSeconds = config.showSeconds;
-  size = config.size;
+  showSeconds = config.showSeconds ?? true;
+  currentStyle = config.currentStyle ?? 0;
 
-  // set once first to avoid initial size being unequal to actual size
-  toggleChangeSize(size, false);
+  // set once first to avoid initial style being unequal to actual style
+  toggleChangeStyle(currentStyle, false);
   toggleShowSeconds(showSeconds, false);
 
   // only set position if all images have been loaded
@@ -138,7 +139,7 @@ function loadConfig() {
       digitContainer.style.top = `${config.top}px`;
     }
 
-    toggleChangeSize(size, false);
+    toggleChangeStyle(currentStyle, false);
     toggleShowSeconds(showSeconds, false);
   });
 }

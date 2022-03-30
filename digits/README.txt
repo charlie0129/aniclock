@@ -1,1 +1,1 @@
-All the digits except the colon are taken from gelbooru.com
+All the images except the colon are taken from gelbooru.com, konachan.com, and lolibooru.moe.
