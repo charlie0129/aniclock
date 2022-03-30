@@ -30,7 +30,7 @@ Basically it looks like this:
 
 ### macOS desktop widget
 
-I personally use it as a desktop widget with [Plash (available for macOS)](https://github.com/sindresorhus/Plash):
+I personally use it as a desktop widget with [Plash (available for macOS)](https://github.com/sindresorhus/Plash). Plash takes advantage of the system webview and is very light on system resources.
 
 <p align="center" style="image-rendering: pixelated;">
   <img src="readme-assets/macos-widget.gif" />
