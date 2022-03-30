@@ -58,7 +58,7 @@ function getImagePromises() {
   return imagePromises;
 }
 
-async function startTick(loop) {
+function updateTime(forceUpdate = false) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
   const timeStringTruncated = timeString.substring(0, timeString.lastIndexOf(':') + 3);
@@ -86,8 +86,8 @@ async function startTick(loop) {
     const digitToUpdate = timeStringNoColonReversed[i];
 
     // do not update dom if this digit has not changed (including value and visibility)
-    // unless loop is false (indicating that this is the first tick, needs force update)
-    if (loop && digitToUpdate === currentDigits[i]) {
+    // unless forceUpdate is true (update all digits)
+    if (!forceUpdate && digitToUpdate === currentDigits[i]) {
       continue;
     }
 
@@ -100,15 +100,10 @@ async function startTick(loop) {
 
     currentDigits[i] = digitToUpdate;
   }
-
-  if (loop) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    startTick(true);
-  }
 }
 
 
-async function toggleShowSeconds(isShowSeconds, updateConfig = true) {
+function toggleShowSeconds(isShowSeconds, updateConfig = true) {
   if (isShowSeconds !== undefined) {
     showSeconds = isShowSeconds;
   } else {
@@ -117,12 +112,13 @@ async function toggleShowSeconds(isShowSeconds, updateConfig = true) {
 
   console.log("Show seconds:", showSeconds);
 
-  await startTick(false);
+  updateTime();
+
   if (updateConfig) saveConfig();
 }
 
 
-async function toggleChangeStyle(desiredStyle, updateConfig = true) {
+function toggleChangeStyle(desiredStyle, updateConfig = true) {
   if (desiredStyle !== undefined) {
     currentStyle = desiredStyle;
   } else {
@@ -134,11 +130,13 @@ async function toggleChangeStyle(desiredStyle, updateConfig = true) {
   colonArr[0].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
   colonArr[1].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
 
-  await startTick(false);
+  updateTime(true);
+
   if (updateConfig) saveConfig();
 }
 
 async function saveConfig() {
+  // wait for all the images to load
   await Promise.all(getImagePromises());
 
   const config = {
@@ -164,8 +162,8 @@ async function loadConfig() {
   currentStyle = config.currentStyle ?? 0;
 
   // set once first to avoid initial style being unequal to actual style
-  await toggleChangeStyle(currentStyle, false);
-  await toggleShowSeconds(showSeconds, false);
+  toggleChangeStyle(currentStyle, false);
+  toggleShowSeconds(showSeconds, false);
 
   // only set position if all images have been loaded
   // otherwise the position will be incorrect 
@@ -178,8 +176,8 @@ async function loadConfig() {
     digitContainer.style.top = `${config.top}px`;
   }
 
-  await toggleChangeStyle(currentStyle, false);
-  await toggleShowSeconds(showSeconds, false);
+  toggleChangeStyle(currentStyle, false);
+  toggleShowSeconds(showSeconds, false);
 }
 
 // make the clock div draggable
@@ -228,4 +226,23 @@ function dragElement(elmnt) {
 
 dragElement(digitContainer);
 loadConfig();
-startTick(true);
+
+// repeatedly update the time
+const intervalId = setInterval(updateTime, 1000);
+
+// refresh the page every hour to alleviate increasing memory usage
+//
+// *** this is a temporary fix ***
+//
+// because I noticed a increasing memory usage (possible a memory leak) from Plash Web Content
+// still not sure if this is a bug or a feature (either of my code, or Plash, or the system webview itself)
+// (Plash v2.1.1, macOS 10.15.7, Safari 15.4)
+//
+// it seems like *chromium-based* browsers are free of this problem from my initial testing
+// although I haven't used this webpage with chromium-based browsers for extended periods of time.
+// to my knowledge, only webkit-based browsers are affected, i.e. the webview inside Plash
+//
+// i will update this if i find the cause of this memory problem
+setTimeout(() => {
+  window.location.reload();
+}, 3600000);
