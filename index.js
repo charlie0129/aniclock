@@ -2,13 +2,22 @@ let showSeconds = true;
 // which digit style is used (is the index of `availableStyles`)
 let currentStyle = 0;
 
+// the following two consts are used to reduce refresh rate of digits
+// current time, array of digits, format: ssmmhh
+// '' stands for invisible digit
+const currentDigits = ['0', '0', '1', '4', '9', '0']
+// if the colons are visible. [0]: the one between ss and mm, [1]: the one between mm and hh
+const colonsVisible = [true, true];
+
 // available styles, see in `digits/`
 const availableStyles = ['s-animated', 's-static', 'm-static'];
 
-const digitContainer = document.getElementById("digit-container");
 
 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+
+const digitContainer = document.getElementById("digit-container");
 
 // calculate the offset right from offset left of the digit container
 function calculateDigitContainerOffsetRight(left) {
@@ -18,6 +27,7 @@ function calculateDigitContainerOffsetRight(left) {
 
   return vw - left - digitContainer.offsetWidth;
 }
+
 
 // get digit images from document
 const elementArr = [];
@@ -31,6 +41,10 @@ const colonArr = [
   document.getElementById('colon-1'),
 ];
 
+// promises that are resolved if the images (digits) are loaded
+// this is used to know when they are loaded to ensure that
+// the size of the digit container is calculated correctly
+// (since unloaded images have 0 width)
 function getImagePromises() {
   const imagePromises = [];
   const images = [...elementArr, ...colonArr];
@@ -44,59 +58,83 @@ function getImagePromises() {
   return imagePromises;
 }
 
-function startTick(loop) {
+async function startTick(loop) {
   const timeString = (new Date()).toLocaleTimeString();
   // truncate time string to only show hours, minutes, and seconds
   const timeStringTruncated = timeString.substring(0, timeString.lastIndexOf(':') + 3);
-  // remove colon from time string and reverse it to match our digit order
+  // remove colon from time string and reverse it to match our digit order: ssmmhh
+  // stored as array of strings so that we can easily change a single digit
   const timeStringNoColonReversed = timeStringTruncated.replaceAll(':', '').split('').reverse();
-
-  if (!showSeconds) {
-    timeStringNoColonReversed[0] = undefined;
-    timeStringNoColonReversed[1] = undefined;
-    colonArr[0].className = 'digit-hidden';
-  } else {
-    colonArr[0].className = 'digit';
+  // set the last digit to an empty string if the hour is a single digit, e.g. [x]9:14:12, stored as 21419[]
+  if (!timeStringNoColonReversed[5]) {
+    timeStringNoColonReversed[5] = '';
   }
 
-  for (let i = 0; i < 6; i++) {
+  if (!showSeconds) {
+    timeStringNoColonReversed[0] = '';
+    timeStringNoColonReversed[1] = '';
+  }
 
-    const currentDigit = timeStringNoColonReversed[i];
-    if (currentDigit === undefined) {
-      elementArr[i].className = 'digit-hidden';
-    } else {
-      elementArr[i].className = 'digit';
-      elementArr[i].src = `digits/${availableStyles[currentStyle]}/${currentDigit}.gif`;
+  // do not update dom if colon visibility has not changed
+  if (showSeconds !== colonsVisible[0]) {
+    colonArr[0].className = showSeconds ? 'digit' : 'digit-hidden';
+    colonsVisible[0] = showSeconds;
+  }
+
+
+  for (let i = 0; i < 6; i++) {
+    const digitToUpdate = timeStringNoColonReversed[i];
+
+    // do not update dom if this digit has not changed (including value and visibility)
+    // unless loop is false (indicating that this is the first tick, needs force update)
+    if (loop && digitToUpdate === currentDigits[i]) {
+      continue;
     }
+
+    if (digitToUpdate) {
+      elementArr[i].className = 'digit';
+      elementArr[i].src = `digits/${availableStyles[currentStyle]}/${digitToUpdate}.gif`;
+    } else {
+      elementArr[i].className = 'digit-hidden';
+    }
+
+    currentDigits[i] = digitToUpdate;
   }
 
   if (loop) {
-    setTimeout(() => { startTick(loop) }, 1000);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    startTick(true);
   }
 }
 
-function toggleShowSeconds(isShowSeconds, updateConfig = true) {
+
+async function toggleShowSeconds(isShowSeconds, updateConfig = true) {
   if (isShowSeconds !== undefined) {
     showSeconds = isShowSeconds;
   } else {
     showSeconds = !showSeconds;
   }
 
-  startTick(false);
+  console.log("Show seconds:", showSeconds);
+
+  await startTick(false);
   if (updateConfig) saveConfig();
 }
 
-function toggleChangeStyle(desiredStyle, updateConfig = true) {
+
+async function toggleChangeStyle(desiredStyle, updateConfig = true) {
   if (desiredStyle !== undefined) {
     currentStyle = desiredStyle;
   } else {
     currentStyle = (currentStyle + 1) % availableStyles.length;
   }
 
+  console.log("Change style:", availableStyles[currentStyle]);
+
   colonArr[0].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
   colonArr[1].src = `digits/${availableStyles[currentStyle]}/colon.gif`;
 
-  startTick(false);
+  await startTick(false);
   if (updateConfig) saveConfig();
 }
 
@@ -113,7 +151,7 @@ async function saveConfig() {
   localStorage.setItem('config', JSON.stringify(config));
 }
 
-function loadConfig() {
+async function loadConfig() {
   const configStr = localStorage.getItem('config');
 
   if (!configStr) {
@@ -126,22 +164,22 @@ function loadConfig() {
   currentStyle = config.currentStyle ?? 0;
 
   // set once first to avoid initial style being unequal to actual style
-  toggleChangeStyle(currentStyle, false);
-  toggleShowSeconds(showSeconds, false);
+  await toggleChangeStyle(currentStyle, false);
+  await toggleShowSeconds(showSeconds, false);
 
   // only set position if all images have been loaded
   // otherwise the position will be incorrect 
   // since offsetRight needs to be calculated according to the image size
-  Promise.all(getImagePromises()).then(() => {
-    // make sure the clock is inside the viewport
-    if (0 < config.left && config.left < vw && 0 < config.top && config.top < vh) {
-      digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
-      digitContainer.style.top = `${config.top}px`;
-    }
+  await Promise.all(getImagePromises());
 
-    toggleChangeStyle(currentStyle, false);
-    toggleShowSeconds(showSeconds, false);
-  });
+  // make sure the clock is inside the viewport
+  if (0 < config.left && config.left < vw && 0 < config.top && config.top < vh) {
+    digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
+    digitContainer.style.top = `${config.top}px`;
+  }
+
+  await toggleChangeStyle(currentStyle, false);
+  await toggleShowSeconds(showSeconds, false);
 }
 
 // make the clock div draggable
