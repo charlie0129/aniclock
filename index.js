@@ -144,9 +144,11 @@ async function saveConfig() {
   const config = {
     showSeconds,
     currentStyle,
-    left: digitContainer.offsetLeft,
+    right: calculateDigitContainerOffsetRight(),
     top: digitContainer.offsetTop,
   };
+
+  console.log("Saving config:", config);
 
   localStorage.setItem('config', JSON.stringify(config));
 }
@@ -173,8 +175,8 @@ async function loadConfig() {
   await Promise.all(getImagePromises());
 
   // make sure the clock is inside the viewport
-  if (0 < config.left && config.left < vw && 0 < config.top && config.top < vh) {
-    digitContainer.style.right = `${calculateDigitContainerOffsetRight(config.left)}px`;
+  if (0 < config.right && config.right < vw && 0 < config.top && config.top < vh) {
+    digitContainer.style.right = `${config.right}px`;
     digitContainer.style.top = `${config.top}px`;
   }
 
@@ -245,7 +247,7 @@ const intervalId = setInterval(updateTime, 1000);
 // to my knowledge, only webkit-based browsers are affected, i.e. the webview inside Plash
 //
 // i will upload a proper fix if i can find the cause of this memory problem later
-// currently, with this fix, the memory usage of **all** Plash processes is like: highest: 180MB (after 1 hr), lowest: 50MB
+// currently, with this fix, the memory usage of **all** Plash processes is like: highest: 180MB (after 1 hr), lowest: 50MB, which is respectable
 // (CPU usage is not affected, always very low. depending on your settings, varies from 0.2% to 2%)
 setTimeout(() => {
   window.location.reload();
