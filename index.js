@@ -236,19 +236,20 @@ const intervalId = setInterval(updateTime, 1000);
 
 // refresh the page every hour to alleviate increasing memory usage
 //
-// *** this is a temporary fix ***
+// TODO: find the actual cause of this problem and fix it the proper way
 //
 // because I noticed a increasing memory usage (possibly a memory leak) from Plash Web Content, around 100MB/hour
-// still not sure if this is a bug or a feature (either of my code, or Plash, or the system webview itself)
-// (tested with Plash v2.1.1, macOS 10.15.7, Safari 15.4)
+// tested with Plash v2.1.1, macOS 10.15.7, Safari 15.4 (i will test with a newer version when i have plans to update macOS)
 //
 // it seems like **chromium-based** browsers are free of this problem from my initial tests
-// although I haven't used this webpage with chromium-based browsers for extended periods of time.
 // to my knowledge, only webkit-based browsers are affected, i.e. the webview inside Plash
 //
-// i will upload a proper fix if i can find the cause of this memory problem later
-// currently, with this fix, the memory usage of **all** Plash processes is like: highest: 180MB (after 1 hr), lowest: 50MB, which is respectable
-// (CPU usage is not affected, always very low. depending on your settings, varies from 0.2% to 2%)
+// i am afraid this is not a problem that i can fix.
+// if anyone also has this problem and found a proper fix, please let me know or make a pull request. much appreciated.
+//
+// currently, with this fix, the memory usage of **all** Plash processes is like: 
+// highest: 180MB (after 1 hr), lowest: 50MB, which is very respectable for a webview
+// also, user will not notice the page reload. so user experience will not be affected.
 setTimeout(() => {
   window.location.reload();
 }, 3600000);
