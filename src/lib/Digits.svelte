@@ -57,8 +57,6 @@
     <span title="Hour">
         {#if h0 !== "0"}
             <img src="{variant}/{h0}.gif" alt="hh-digit-0"/>
-        {:else }
-            <img src="{variant}/placeholder.gif" alt="hh-digit-0"/>
         {/if}
         <img alt="hh-digit-1" src="{variant}/{h1}.gif"/>
     </span>

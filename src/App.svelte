@@ -20,7 +20,7 @@
         const idx = config.clockConfigs.length;
         config.clockConfigs.push({
             ...defaultClockConfig,
-            left: 500 * (idx % cols),
+            right: 500 * (idx % cols),
             top: 300 * Math.floor(idx / cols),
         });
         config = config;
@@ -41,11 +41,11 @@
     function moveOutOfBoundaryClocks(): boolean {
         let moved = false;
         config.clockConfigs.forEach((i, idx) => {
-            if (i.left < 0 || i.left > vw || i.top < 0 || i.top > vh) {
+            if (i.right < 0 || i.right > vw || i.top < 0 || i.top > vh) {
                 moved = true;
                 const col = idx % cols;
                 const row = Math.floor(idx / cols);
-                i.left = 500 * col;
+                i.right = 500 * col;
                 i.top = 300 * row;
             }
         })

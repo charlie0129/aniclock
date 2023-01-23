@@ -13,7 +13,7 @@ Basically it looks like this:
 Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widgit:
 
 <p align="center" style="image-rendering: pixelated;">
-  <img src="https://user-images.githubusercontent.com/55270174/214129540-828d2c3c-e8c5-4937-84a2-40dfa4c4f431.png" alt="example" />
+  <img src="https://user-images.githubusercontent.com/55270174/214154872-1016c30d-8565-44f6-b9a9-e3e9bfb240c2.png" alt="example" />
 </p>
 
 ## Features

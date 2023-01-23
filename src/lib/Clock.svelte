@@ -90,7 +90,7 @@
 
     .container {
         border-radius: 8px;
-        padding: 16px;
+        padding: 12px 16px 8px 14px;
         background: var(--bg);
     }
 
@@ -100,7 +100,7 @@
     }
 </style>
 
-<Draggable bind:left={config.left} bind:top={config.top} onMoved={handleOnChange}>
+<Draggable bind:right={config.right} bind:top={config.top} onMoved={handleOnChange}>
     <div class={config.showBg?"container blurred":""} style="--blur-radius: {config.blur}px; --bg: {config.bgColor};">
         <div on:dblclick={handleShowSettings}>
             <Digits {...config} {ts}/>

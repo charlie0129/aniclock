@@ -1,32 +1,39 @@
-<script>
-    export let left = 100;
+<script lang="ts">
+    export let right = 100;
     export let top = 100;
     export let onMoved = (a, b) => {
     };
 
-    let oldLeft = left;
+    let oldRight = right;
     let oldTop = top;
+    let width: number;
     let moving = false;
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+    function calcRight(left: number) {
+        return vw - left - width;
+    }
 
     function onMouseDown() {
         moving = true;
-        oldLeft = left;
+        oldRight = right;
         oldTop = top;
     }
 
     function onMouseMove(e) {
         if (moving) {
-            left += e.movementX;
+            right -= e.movementX;
             top += e.movementY;
         }
     }
 
     function onMouseUp() {
         moving = false;
-        if (oldLeft !== left && oldTop !== top) {
-            onMoved(left, top);
+        if (oldRight !== right && oldTop !== top) {
+            onMoved(right, top);
         }
-        oldLeft = left;
+        oldRight = right;
         oldTop = top;
     }
 </script>
@@ -39,7 +46,12 @@
     }
 </style>
 
-<section class="draggable" on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;">
+<section
+        bind:offsetWidth={width}
+        class="draggable"
+        on:mousedown={onMouseDown}
+        style="right: {right}px; top: {top}px;"
+>
     <slot></slot>
 </section>
 

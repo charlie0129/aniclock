@@ -3,13 +3,13 @@ export interface ClockConfig {
     showMilliseconds: boolean;
     twelveHr: boolean;
     variant: "m-static" | "s-animated" | "s-static";
-    showBg:boolean;
+    showBg: boolean;
     blur: number;
-    bgColor:string;
+    bgColor: string;
     tz: number;
     updateInterval: number;
     calibrateInterval: number;
-    left: number;
+    right: number;
     top: number;
     showSettings: boolean;
 }
@@ -22,10 +22,10 @@ export const defaultClockConfig: ClockConfig = {
     tz: -(new Date).getTimezoneOffset() / 60,
     updateInterval: 1_000, // 1s
     calibrateInterval: 600, // 600s
-    left: 0,
+    right: 0,
     top: 0,
     showSettings: true,
     blur: 32,
-    bgColor: "#FFFFFF66",
+    bgColor: "#FFFFFF77",
     showBg: true,
 };
