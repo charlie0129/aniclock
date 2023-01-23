@@ -1,6 +1,6 @@
 # aniclock
 
-A clock with anime girls holding digits. 
+A clock with anime girls holding digits.
 
 It is a webpage, and is intended to be embedded in applications like [Plash](https://github.com/sindresorhus/Plash) as desktop widgets.
 
@@ -20,9 +20,9 @@ Basically it looks like this:
 
 - Drag it to move around.
 
-- Optimized to use the lowest possible resources
+- Optimized to use the least possible resources
 
-  > Although it barely uses any CPU with default settings (animated, showing seconds), if you are nerdy and want to lower CPU usage even further, just give up some appearence: 1. use static (instead of animated) styles 2. hide seconds.
+  > Although I have already optimized the code to update the screen only when necessary, if you are really nerdy and want the absolutely lowest CPU usage, you can 1. use static styles (instead of animated) 2. hide seconds. By doing these two steps, DOM will only be updated once a minute.
 
 - Position on screen, style, and visibility of seconds are preserved between reloads
 
