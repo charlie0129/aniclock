@@ -7,24 +7,37 @@ It is a webpage, and is intended to be embedded in applications like [Plash](htt
 Basically it looks like this:
 
 <p align="center" style="image-rendering: pixelated;">
-  <img src="readme-assets/example.gif" />
+  <img src="https://user-images.githubusercontent.com/55270174/214122884-ba4666ba-205c-4436-b382-c49f7488e860.gif" alt="example" />
 </p>
 
-> Saw some black dots around straight lines? They are the artifacts of gif downscaling and will **not** be present in the actual image. However, I am not refering to the pixelated look of the image, which is intended.
+Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widgit:
+
+<p align="center" style="image-rendering: pixelated;">
+  <img src="https://user-images.githubusercontent.com/55270174/214129540-828d2c3c-e8c5-4937-84a2-40dfa4c4f431.png" alt="example" />
+</p>
 
 ## Features
 
-- Double click hours to change styles (small or medium; static or animated).
+Just have a try! https://charlie0129.github.io/aniclock
 
-- Double click minutes to show/hide seconds.
+- Choose between different digit styles
+- Multiple clocks
+- Drag to move clocks around
+- Preserve settings between webpage reloads
+- Time zone customization
+- 12/24-hr clock
+- Show/Hide settings panel
+- Show/Hide seconds/milliseconds
+- Custom update/calibration interval
 
-- Drag it to move around.
+<details>
+<summary>What is update/calibration interval?</summary>
 
-- Optimized to use the least possible resources
-
-  > Although I have already optimized the code to update the screen only when necessary, if you are really nerdy and want the absolutely lowest CPU usage, you can 1. use static styles (instead of animated) 2. hide seconds. By doing these two steps, DOM will only be updated once a minute.
-
-- Position on screen, style, and visibility of seconds are preserved between reloads
+- *Update*: update the digits on screen, i.e. let the anime girls show current time.
+- *Update interval*: how often an *update* happens. The default 1000ms is sufficient if you don't have milliseconds shown.
+- *Calibration*: make a certain *update* as close to the beginning of each second as possible to improve perceived accuracy (only useful when milliseconds is hidden). Why do this? Let's take a example. We assume the digits are actually updated at `09:41:00.863`, but you can only see `09:41:00` and you will probably assume it is excatly `09:41:00.000`. See? That not correct. There is a 863ms difference. But if we update the digits as close to the beginning of each second as possible (e.g. `09:41:00.023`), well, that's much more close to what you see (`09:41:00`).
+- *Calibration interval*: how often a *calibration* happens. Since the actual *update interval* is not always the same due to JavaScript nature, so the moment when an *update* happens will slowly drift away from the beginning of each second. So we need regular *calibration*.
+</details>
 
 ## Possible use case
 
@@ -32,11 +45,11 @@ Basically it looks like this:
 
 I personally use it as a desktop widget with [Plash (available for macOS)](https://github.com/sindresorhus/Plash). Plash takes advantage of the system webview and is very light on system resources.
 
-<p align="center" style="image-rendering: pixelated;">
-  <img src="readme-assets/macos-widget.gif" />
-</p>
+- Add a new website pointing to https://charlie0129.github.io/aniclock in Plash
+- Use *Browsing Mode* to set things up
+- Double-click anywhere to close the settings panel (don't worry, your settings will be preserved)
 
-For Windows users, try applications like Wallpaper Engine.
+Now you are good to go!
 
 ---
 
