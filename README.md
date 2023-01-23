@@ -26,7 +26,7 @@ Just have a try! https://charlie0129.github.io/aniclock
 - Preserve settings between webpage reloads
 - Time zone customization
 - 12/24-hr clock
-- Show/Hide settings panel
+- Show/Hide settings panel (double-click the clock)
 - Show/Hide seconds/milliseconds
 - Custom update/calibration interval
 
@@ -47,7 +47,7 @@ I personally use it as a desktop widget with [Plash (available for macOS)](https
 
 - Add a new website pointing to https://charlie0129.github.io/aniclock in Plash
 - Use *Browsing Mode* to set things up
-- Double-click anywhere to close the settings panel (don't worry, your settings will be preserved)
+- Close the settings panel (don't worry, your settings will be preserved)
 
 Now you are good to go!
 

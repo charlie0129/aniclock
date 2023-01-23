@@ -39,8 +39,8 @@
     }
 </style>
 
-<section on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;" class="draggable">
+<section class="draggable" on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;">
     <slot></slot>
 </section>
 
-<svelte:window on:mouseup={onMouseUp} on:mousemove={onMouseMove}/>
+<svelte:window on:mousemove={onMouseMove} on:mouseup={onMouseUp}/>

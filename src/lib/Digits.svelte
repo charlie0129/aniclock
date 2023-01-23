@@ -53,21 +53,21 @@
     }
 </style>
 
-<div on:mousedown|preventDefault={()=>{}} class="digits">
+<div class="digits" on:mousedown|preventDefault={()=>{}}>
     <span title="Hour">
         {#if h0 !== "0"}
             <img src="{variant}/{h0}.gif" alt="hh-digit-0"/>
         {:else }
             <img src="{variant}/placeholder.gif" alt="hh-digit-0"/>
         {/if}
-        <img src="{variant}/{h1}.gif" alt="hh-digit-1"/>
+        <img alt="hh-digit-1" src="{variant}/{h1}.gif"/>
     </span>
 
 
-    <img src="{variant}/colon.gif" alt="mm-hh-colon"/>
+    <img alt="mm-hh-colon" src="{variant}/colon.gif"/>
     <span title="Minute">
-            <img src="{variant}/{m0}.gif" alt="mm-digit-0"/>
-            <img src="{variant}/{m1}.gif" alt="mm-digit-1"/>
+            <img alt="mm-digit-0" src="{variant}/{m0}.gif"/>
+            <img alt="mm-digit-1" src="{variant}/{m1}.gif"/>
     </span>
 
     {#if showSeconds}

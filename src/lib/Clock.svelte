@@ -44,16 +44,23 @@
 
     let calibrateTimerId;
     handleChangeCalibrateInterval()
+
     function handleChangeCalibrateInterval() {
         clearInterval(calibrateTimerId)
         if (config.calibrateInterval <= 0) {
             calibrateTimerId = undefined;
             return;
         }
-        calibrateTimerId = setInterval(handleChangeInterval, config.calibrateInterval*1000)
+        calibrateTimerId = setInterval(handleChangeInterval, config.calibrateInterval * 1000)
+    }
+
+    function handleShowSettings() {
+        config.showSettings = !config.showSettings
+        handleOnChange()
     }
 
     function handleOnChange() {
+        config.showMilliseconds = config.showSeconds && config.showMilliseconds
         onChange(config)
     }
 </script>
@@ -83,7 +90,10 @@
 </style>
 
 <Draggable bind:left={config.left} bind:top={config.top} onMoved={handleOnChange}>
-    <Digits {ts} {...config}/>
+    <div on:dblclick={handleShowSettings}>
+        <Digits {...config} {ts}/>
+    </div>
+
 
     {#if config.showSettings}
         <div style="padding: 8px; background: #FFFFFF66">
@@ -112,7 +122,9 @@
 
                 <p>
                     <label>Show milliseconds:</label>
-                    <input type="checkbox" bind:checked={config.showMilliseconds} disabled={!config.showSeconds}>
+                    <input type="checkbox"
+                           bind:checked={config.showMilliseconds}
+                           disabled={!config.showSeconds}>
                 </p>
 
                 <p>
@@ -145,7 +157,7 @@
                 <button on:click={onDelete}>Delete</button>
             {/if}
 
-            <span style="font-size: xx-small; color: gray; float: right;">Double-click anywhere to close.</span>
+            <span style="font-size: xx-small; color: gray; float: right;">Double-click the clock to close.</span>
         </div>
     {/if}
 </Draggable>

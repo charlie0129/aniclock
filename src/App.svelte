@@ -53,27 +53,18 @@
         config = config
         return moved
     }
-
-    function handleShowSettings(idx: number) {
-        const i = config.clockConfigs[idx];
-        i.showSettings = !i.showSettings;
-        config = config;
-        handleConfigChange();
-    }
 </script>
 
 <main>
     {#each config.clockConfigs as conf, i}
-        <div on:dblclick={()=>{handleShowSettings(i)}}>
-            <Clock idx={i}
-                   config={conf}
-                   onAdd={handleAddClock}
-                   onDelete={()=>{handleDeleteClock(i)}}
-                   onChange={handleConfigChange}
-                   showDelete={config.clockConfigs.length>1}
-                   showAdd={config.clockConfigs.length<rows*cols-1}
-            />
-        </div>
+        <Clock idx={i}
+               config={conf}
+               onAdd={handleAddClock}
+               onDelete={()=>{handleDeleteClock(i)}}
+               onChange={handleConfigChange}
+               showDelete={config.clockConfigs.length>1}
+               showAdd={config.clockConfigs.length<rows*cols-1}
+        />
     {/each}
 </main>
 
