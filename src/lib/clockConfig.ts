@@ -3,6 +3,9 @@ export interface ClockConfig {
     showMilliseconds: boolean;
     twelveHr: boolean;
     variant: "m-static" | "s-animated" | "s-static";
+    showBg:boolean;
+    blur: number;
+    bgColor:string;
     tz: number;
     updateInterval: number;
     calibrateInterval: number;
@@ -22,4 +25,7 @@ export const defaultClockConfig: ClockConfig = {
     left: 0,
     top: 0,
     showSettings: true,
+    blur: 32,
+    bgColor: "#FFFFFF66",
+    showBg: true,
 };

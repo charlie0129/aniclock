@@ -36,7 +36,6 @@
     function handleConfigChange() {
         moveOutOfBoundaryClocks()
         localStorage.setItem("config", JSON.stringify(config))
-        console.log("stored config", config)
     }
 
     function moveOutOfBoundaryClocks(): boolean {

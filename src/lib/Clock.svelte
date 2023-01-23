@@ -81,22 +81,33 @@
 
     input {
         display: table-cell;
-        margin: 2px;
+        margin: 4px;
     }
 
     button {
         margin-right: 4px;
     }
+
+    .container {
+        border-radius: 8px;
+        padding: 16px;
+        background: var(--bg);
+    }
+
+    .blurred {
+        backdrop-filter: blur(var(--blur-radius));
+        -webkit-backdrop-filter: blur(var(--blur-radius));
+    }
 </style>
 
 <Draggable bind:left={config.left} bind:top={config.top} onMoved={handleOnChange}>
-    <div on:dblclick={handleShowSettings}>
-        <Digits {...config} {ts}/>
-    </div>
+    <div class={config.showBg?"container blurred":""} style="--blur-radius: {config.blur}px; --bg: {config.bgColor};">
+        <div on:dblclick={handleShowSettings}>
+            <Digits {...config} {ts}/>
+        </div>
 
 
-    {#if config.showSettings}
-        <div style="padding: 8px; background: #FFFFFF66">
+        {#if config.showSettings}
             <p style="display: flex">
                 <span style="font-weight: bold">Settings:</span>
                 <span>&nbsp;Aniclock #{idx + 1}</span>
@@ -128,26 +139,50 @@
                 </p>
 
                 <p>
+                    <label>Show background:</label>
+                    <input type="checkbox"
+                           bind:checked={config.showBg}
+                    >
+                </p>
+
+                {#if config.showBg}
+                    <p>
+                        <label>Blur radius:</label>
+                        <input type="number" min=0 style="width: 64px;" bind:value={config.blur}>px
+                    </p>
+
+                    <p>
+                        <label>Background color:</label>
+                        <input type="text" style="width: 64px;" bind:value={config.bgColor}>
+                    </p>
+                {/if}
+
+                <p>
                     <label>Time zone offset:</label>
-                    <input type="number" bind:value={config.tz} min=-11 max=11 style="width: 56px;">hours
+                    <input type="number" bind:value={config.tz} min=-11 max=11 style="width: 64px;">hours
                 </p>
 
                 <p>
                     <label>Update interval:</label>
                     <input type="number" bind:value={config.updateInterval} on:change={handleChangeInterval}
-                           min=0 max=60_000 style="width: 56px;">ms (0 = never)
+                           min=0 max=60_000 style="width: 64px;">ms (0 = never)
                 </p>
 
-                <p>
-                    <label>Calibrate interval:</label>
-                    <input type="number" bind:value={config.calibrateInterval} on:change={handleChangeCalibrateInterval}
-                           min=0 style="width: 56px;">s (0 = never)
-                </p>
+                {#if config.updateInterval >= 1000}
+                    <p>
+                        <label>Calibration interval:</label>
+                        <input type="number" bind:value={config.calibrateInterval}
+                               on:change={handleChangeCalibrateInterval}
+                               min=0 style="width: 64px;">s (0 = never)
+                    </p>
+                {/if}
             </form>
 
             <hr>
 
-            <button on:click={handleChangeInterval}>Calibrate</button>
+            {#if config.updateInterval >= 1000}
+                <button on:click={handleChangeInterval}>Calibrate</button>
+            {/if}
 
             {#if showAdd}
                 <button on:click={onAdd}>Add</button>
@@ -158,8 +193,7 @@
             {/if}
 
             <span style="font-size: xx-small; color: gray; float: right;">Double-click the clock to close.</span>
-        </div>
-    {/if}
+        {/if}
+    </div>
 </Draggable>
-
 
