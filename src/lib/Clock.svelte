@@ -77,7 +77,7 @@
 		</div>
 
 		{#if config.showSettings}
-			<p style="display: flex">
+			<p style="display: flex; margin: 8px 0 0 0;">
 				<span style="font-weight: bold">Settings:</span>
 				<span>&nbsp;Aniclock #{idx + 1}</span>
 			</p>
@@ -200,6 +200,7 @@
 <style>
 	form {
 		display: table;
+		font-size: small;
 	}
 
 	p {

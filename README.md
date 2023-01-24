@@ -10,7 +10,7 @@ Basically it looks like this:
   <img src="https://user-images.githubusercontent.com/55270174/214122884-ba4666ba-205c-4436-b382-c49f7488e860.gif" alt="example" />
 </p>
 
-Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widgit:
+Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widget:
 
 <p align="center" style="image-rendering: pixelated;">
   <img width="700" src="https://user-images.githubusercontent.com/55270174/214243265-52f92215-6286-403c-828c-308ace9bee1a.jpg" alt="example-plash" />
@@ -42,7 +42,7 @@ Just have a try! https://charlie0129.github.io/aniclock
 
 - _Update_: update the digits on screen, i.e. let the anime girls show current time.
 - _Update interval_: how often an _update_ happens. The default 1000ms is sufficient if you don't have milliseconds shown.
-- _Calibration_: make a certain _update_ as close to the beginning of each second as possible to improve perceived accuracy (only useful when milliseconds is hidden). Why do this? Let's take a example. We assume the digits are actually updated at `09:41:00.863`, but you can only see `09:41:00` and you will probably assume it is excatly `09:41:00.000`. See? That not correct. There is a 863ms difference. But if we update the digits as close to the beginning of each second as possible (e.g. `09:41:00.023`), well, that's much more close to what you see (`09:41:00`).
+- _Calibration_: make a certain _update_ as close to the beginning of each second as possible to improve perceived accuracy (only useful when milliseconds is hidden). Why do this? Let's take a example. We assume the digits are actually updated at `09:41:00.863`, but you can only see `09:41:00` and you will probably assume it is exactly `09:41:00.000`. See? That not correct. There is a 863ms difference. But if we update the digits as close to the beginning of each second as possible (e.g. `09:41:00.023`), well, that's much more close to what you see (`09:41:00`).
 - _Calibration interval_: how often a _calibration_ happens. Since the actual _update interval_ is not always the same due to JavaScript nature, so the moment when an _update_ happens will slowly drift away from the beginning of each second. So we need regular _calibration_.
 </details>
 
