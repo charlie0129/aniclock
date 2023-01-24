@@ -40,7 +40,6 @@
 	on:mousedown={onMouseDown}
 	style="right: {right}px; top: {top}px; --border-width: {1 / devicePixelRatio}px;"
 >
-	<!-- I have to place shadows above↑ because WebKit have a problem handling box-shdow and backdrop-filter.-->
 	<slot />
 </section>
 
@@ -55,6 +54,7 @@
 
 	.shadow {
 		border-radius: 8px;
+		/*I have to place shadows here instead in Clock because WebKit have a problem handling box-shdow and backdrop-filter.*/
 		box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--border-width) rgba(0, 0, 0, 0.2),
 			inset 0 1px 0 rgba(255, 255, 255, 0.6);
 	}

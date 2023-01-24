@@ -118,12 +118,12 @@
 				{#if config.showBg}
 					<p>
 						<label>Blur radius:</label>
-						<input type="number" min="0" style="width: 64px;" bind:value={config.blur} />px
+						<input type="number" min="0" style="width: 80px;" bind:value={config.blur} />px
 					</p>
 
 					<p>
 						<label>Background color:</label>
-						<input type="text" style="width: 64px;" bind:value={config.bgColor} />
+						<input type="text" style="width: 80px;" bind:value={config.bgColor} />
 					</p>
 				{/if}
 
@@ -135,7 +135,7 @@
 						min="0.5"
 						max="4"
 						step="0.5"
-						style="width: 64px;"
+						style="width: 80px;"
 					/>x
 				</p>
 
@@ -146,7 +146,7 @@
 						bind:value={config.tz}
 						min="-11"
 						max="11"
-						style="width: 64px;"
+						style="width: 80px;"
 					/>hours
 				</p>
 
@@ -158,7 +158,7 @@
 						on:change={handleChangeInterval}
 						min="0"
 						max="60_000"
-						style="width: 64px;"
+						style="width: 80px;"
 					/>ms (0 = never)
 				</p>
 
@@ -170,7 +170,7 @@
 							bind:value={config.calibrateInterval}
 							on:change={handleChangeCalibrateInterval}
 							min="0"
-							style="width: 64px;"
+							style="width: 80px;"
 						/>s (0 = never)
 					</p>
 				{/if}
@@ -190,7 +190,7 @@
 				<button on:click={onDelete}>Delete</button>
 			{/if}
 
-			<span style="font-size: xx-small; color: gray; float: right;"
+			<span style="font-size: xx-small; color: #33333366; float: right;"
 				>Double-click the clock to close.</span
 			>
 		{/if}
@@ -221,6 +221,12 @@
 		margin-right: 4px;
 	}
 
+	hr {
+		background: #33333310;
+		color: #33333310;
+		border: solid 1px;
+	}
+
 	.container {
 		border-radius: 8px;
 		padding: 12px 16px 8px 14px;
@@ -228,7 +234,7 @@
 	}
 
 	.blurred {
-		backdrop-filter: blur(var(--blur-radius)) saturate(150%);
-		-webkit-backdrop-filter: blur(var(--blur-radius)) saturate(150%);
+		backdrop-filter: blur(var(--blur-radius)) saturate(200%);
+		-webkit-backdrop-filter: blur(var(--blur-radius)) saturate(200%);
 	}
 </style>

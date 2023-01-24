@@ -20,7 +20,7 @@ Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widget:
 Settings (experimental):
 
 <p align="center" style="image-rendering: pixelated;">
-  <img width="546" alt="image" src="https://user-images.githubusercontent.com/55270174/214243130-987535bf-0c25-4b8d-9156-d51f7a1fc048.jpg">
+  <img width="544" alt="image" src="https://user-images.githubusercontent.com/55270174/214282618-1d11a6f2-b2a8-44a7-b8e5-ee77c92499a6.jpg">
 </p>
 
 ## Features

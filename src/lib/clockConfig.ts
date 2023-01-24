@@ -27,7 +27,7 @@ export const defaultClockConfig: ClockConfig = {
 	top: 0,
 	showSettings: true,
 	blur: 32,
-	bgColor: '#E0E0E099',
+	bgColor: '#E9E9E9A0',
 	showBg: true,
 	zoom: 1
 };
