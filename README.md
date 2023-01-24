@@ -13,14 +13,14 @@ Basically it looks like this:
 Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widgit:
 
 <p align="center" style="image-rendering: pixelated;">
-  <img width="677" src="https://user-images.githubusercontent.com/55270174/214155908-56291c4e-8c75-4071-a8a3-b45d3d34a77d.png" alt="example-plash" />
-  <img width="677" src="https://user-images.githubusercontent.com/55270174/214155972-9deb53df-c9dc-4017-8c58-85a5aca87bee.png" alt="example-plash" />
+  <img width="700" src="https://user-images.githubusercontent.com/55270174/214243265-52f92215-6286-403c-828c-308ace9bee1a.jpg" alt="example-plash" />
+  <img width="700" src="https://user-images.githubusercontent.com/55270174/214243334-50bd1fe6-a807-4e7d-8a20-00a45c8a3ac2.jpg" alt="example-plash" />
 </p>
 
 Settings (experimental):
 
 <p align="center" style="image-rendering: pixelated;">
-  <img width="359" alt="image" src="https://user-images.githubusercontent.com/55270174/214156722-724655b6-cc97-447d-a1fc-fdba2afe9db8.png">
+  <img width="546" alt="image" src="https://user-images.githubusercontent.com/55270174/214243130-987535bf-0c25-4b8d-9156-d51f7a1fc048.jpg">
 </p>
 
 ## Features
