@@ -5,6 +5,13 @@
     export let showSeconds: boolean = true;
     export let showMilliseconds: boolean = false;
     export let variant: "m-static" | "s-animated" | "s-static" = "s-animated";
+    export let zoom: number = 1;
+
+    const heights = {
+        "m-static": 150,
+        "s-animated":100,
+        "s-static":100,
+    }
 
     let h0: string = "0",
         h1: string = "9",
@@ -51,9 +58,13 @@
         /* preserve original pixelated look  */
         image-rendering: pixelated;
     }
+
+    img {
+        height: var(--height);
+    }
 </style>
 
-<div class="digits" on:mousedown|preventDefault={()=>{}}>
+<div class="digits" on:mousedown|preventDefault={()=>{}} style="--height: {heights[variant]*zoom}px">
     <span title="Hour">
         {#if h0 !== "0"}
             <img src="{variant}/{h0}.gif" alt="hh-digit-0"/>

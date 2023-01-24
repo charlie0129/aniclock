@@ -12,6 +12,7 @@ export interface ClockConfig {
     right: number;
     top: number;
     showSettings: boolean;
+    zoom: number;
 }
 
 export const defaultClockConfig: ClockConfig = {
@@ -26,6 +27,7 @@ export const defaultClockConfig: ClockConfig = {
     top: 0,
     showSettings: true,
     blur: 32,
-    bgColor: "#FFFFFF77",
+    bgColor: "#E0E0E099",
     showBg: true,
+    zoom: 1,
 };

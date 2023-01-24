@@ -95,13 +95,16 @@
     }
 
     .blurred {
-        backdrop-filter: blur(var(--blur-radius));
-        -webkit-backdrop-filter: blur(var(--blur-radius));
+        backdrop-filter: blur(var(--blur-radius)) saturate(150%);
+        -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(150%);
     }
 </style>
 
-<Draggable bind:right={config.right} bind:top={config.top} onMoved={handleOnChange}>
-    <div class={config.showBg?"container blurred":""} style="--blur-radius: {config.blur}px; --bg: {config.bgColor};">
+<Draggable bind:right={config.right} bind:top={config.top} onMoved={handleOnChange} showShadow={config.showBg} >
+    <div
+            class={config.showBg?"container blurred":""}
+            style="--blur-radius: {config.blur}px; --bg: {config.bgColor};"
+    >
         <div on:dblclick={handleShowSettings}>
             <Digits {...config} {ts}/>
         </div>
@@ -156,6 +159,11 @@
                         <input type="text" style="width: 64px;" bind:value={config.bgColor}>
                     </p>
                 {/if}
+
+                <p>
+                    <label>Zoom:</label>
+                    <input type="number" bind:value={config.zoom} min=0.5 max=4 step=0.5 style="width: 64px;">x
+                </p>
 
                 <p>
                     <label>Time zone offset:</label>

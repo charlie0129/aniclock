@@ -11,7 +11,7 @@
     const rows: number = Math.floor(vh / 300);
 
 
-    config = JSON.parse(localStorage.getItem("config")) || defaultConfig;
+    config = JSON.parse(localStorage.getItem("aniclock-config")) || defaultConfig;
     if (moveOutOfBoundaryClocks()) {
         handleConfigChange()
     }
@@ -35,7 +35,7 @@
 
     function handleConfigChange() {
         moveOutOfBoundaryClocks()
-        localStorage.setItem("config", JSON.stringify(config))
+        localStorage.setItem("aniclock-config", JSON.stringify(config))
     }
 
     function moveOutOfBoundaryClocks(): boolean {

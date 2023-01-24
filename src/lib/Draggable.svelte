@@ -3,6 +3,7 @@
     export let top = 100;
     export let onMoved = (a, b) => {
     };
+    export let showShadow = true;
 
     let oldRight = right;
     let oldTop = top;
@@ -36,6 +37,7 @@
         oldRight = right;
         oldTop = top;
     }
+
 </script>
 
 <style>
@@ -44,14 +46,20 @@
         cursor: move;
         position: absolute;
     }
+
+    .shadow {
+        border-radius: 8px;
+        box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--border-width) rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, .6);
+    }
 </style>
 
 <section
         bind:offsetWidth={width}
-        class="draggable"
+        class={(showShadow ?"shadow" :"")+" draggable"}
         on:mousedown={onMouseDown}
-        style="right: {right}px; top: {top}px;"
+        style="right: {right}px; top: {top}px; --border-width: {1/devicePixelRatio}px;"
 >
+    <!-- I have to place shadows above↑ because WebKit have a problem handling box-shdow and backdrop-filter.-->
     <slot></slot>
 </section>
 
