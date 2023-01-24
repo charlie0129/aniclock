@@ -1,5 +1,6 @@
 :root {
-	font-family: sans-serif;
+	font-family: system-ui, sans-serif;
+	color-scheme: light dark;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;

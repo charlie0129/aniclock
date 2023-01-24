@@ -54,8 +54,19 @@
 
 	.shadow {
 		border-radius: 8px;
-		/*I have to place shadows here instead in Clock because WebKit have a problem handling box-shdow and backdrop-filter.*/
-		box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--border-width) rgba(0, 0, 0, 0.2),
-			inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.shadow {
+			/*I have to place shadows here instead in Clock because WebKit have a problem handling box-shdow and backdrop-filter.*/
+			box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--border-width) #000000cc;
+		}
+	}
+
+	@media (prefers-color-scheme: light) {
+		.shadow {
+			/*I have to place shadows here instead in Clock because WebKit have a problem handling box-shdow and backdrop-filter.*/
+			box-shadow: 2px 4px 16px 2px rgba(0, 0, 0, 0.2), 0 0 0 var(--border-width) rgba(0, 0, 0, 0.2);
+		}
 	}
 </style>

@@ -70,7 +70,8 @@
 >
 	<div
 		class={config.showBg ? 'container blurred' : ''}
-		style="--blur-radius: {config.blur}px; --bg: {config.bgColor};"
+		style="--blur-radius: {config.blur}px; --bg: {config.bgColor}; --border-width: {1 /
+			devicePixelRatio}px;"
 	>
 		<div on:dblclick={handleShowSettings}>
 			<Digits {...config} {ts} />
@@ -114,18 +115,6 @@
 					<label>Show background:</label>
 					<input type="checkbox" bind:checked={config.showBg} />
 				</p>
-
-				{#if config.showBg}
-					<p>
-						<label>Blur radius:</label>
-						<input type="number" min="0" style="width: 80px;" bind:value={config.blur} />px
-					</p>
-
-					<p>
-						<label>Background color:</label>
-						<input type="text" style="width: 80px;" bind:value={config.bgColor} />
-					</p>
-				{/if}
 
 				<p>
 					<label>Zoom:</label>
@@ -222,15 +211,33 @@
 	}
 
 	hr {
-		background: #33333310;
-		color: #33333310;
 		border: solid 1px;
 	}
 
 	.container {
 		border-radius: 8px;
 		padding: 12px 16px 8px 14px;
-		background: var(--bg);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.container {
+			background: #33333380;
+			box-shadow: inset 0 0 0 1px #eeeeee25;
+		}
+		hr {
+			background: #eeeeee25;
+			color: #eeeeee25;
+		}
+	}
+
+	@media (prefers-color-scheme: light) {
+		.container {
+			background: #e9e9e990;
+		}
+		hr {
+			background: #11111111;
+			color: #11111111;
+		}
 	}
 
 	.blurred {

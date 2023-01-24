@@ -10,17 +10,18 @@ Basically it looks like this:
   <img src="https://user-images.githubusercontent.com/55270174/214122884-ba4666ba-205c-4436-b382-c49f7488e860.gif" alt="example" />
 </p>
 
-Using [Plash](https://github.com/sindresorhus/Plash) as a desktop widget:
+With [Plash](https://github.com/sindresorhus/Plash) on macOS:
 
 <p align="center" style="image-rendering: pixelated;">
-  <img width="700" src="https://user-images.githubusercontent.com/55270174/214243265-52f92215-6286-403c-828c-308ace9bee1a.jpg" alt="example-plash" />
-  <img width="700" src="https://user-images.githubusercontent.com/55270174/214243334-50bd1fe6-a807-4e7d-8a20-00a45c8a3ac2.jpg" alt="example-plash" />
+  <img width="605" src="https://user-images.githubusercontent.com/55270174/214298163-87c92848-12cc-42a0-bfea-b6bfe08ce6fc.jpg" alt="aniclock-plash-light" />
+  <img width="605" src="https://user-images.githubusercontent.com/55270174/214298176-b9a104c9-4f47-45c3-b3b6-60388598af39.jpg" alt="aniclock-plash-dark" />
+  <img width="605" src="https://user-images.githubusercontent.com/55270174/214298184-685b8f02-6fd2-4a3f-8aad-56e9b5d0cc2f.jpg" alt="aniclock-plash-no-bg" />
 </p>
 
-Settings (experimental):
+Settings panel (experimental):
 
 <p align="center" style="image-rendering: pixelated;">
-  <img width="544" alt="image" src="https://user-images.githubusercontent.com/55270174/214282618-1d11a6f2-b2a8-44a7-b8e5-ee77c92499a6.jpg">
+  <img width="550" alt="aniclock-settings" src="https://user-images.githubusercontent.com/55270174/214298499-21ec9569-1454-4fad-94c5-3beb9a06ad0f.jpg">
 </p>
 
 ## Features
@@ -28,9 +29,11 @@ Settings (experimental):
 Just have a try! https://charlie0129.github.io/aniclock
 
 - Choose between different digit styles
-- Multiple clocks
+- Follows system light/dark mode
 - Drag to move clocks around
 - Preserve settings between webpage reloads
+- Pixelated-zoom
+- Multiple clocks
 - Time zone customization
 - 12/24-hr clock
 - Show/Hide settings panel (double-click the clock)
