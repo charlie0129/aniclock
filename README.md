@@ -7,7 +7,7 @@ It is a webpage, and is intended to be embedded in applications like [Plash](htt
 Basically it looks like this:
 
 <p align="center" style="image-rendering: pixelated;">
-  <img src="https://user-images.githubusercontent.com/55270174/214122884-ba4666ba-205c-4436-b382-c49f7488e860.gif" alt="example" />
+  <img width="370" src="https://user-images.githubusercontent.com/55270174/214356078-89430299-247d-4f1f-82f6-a41340df0949.gif" alt="example" />
 </p>
 
 With [Plash](https://github.com/sindresorhus/Plash) on macOS:

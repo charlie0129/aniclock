@@ -68,11 +68,7 @@
 	onMoved={handleOnChange}
 	showShadow={config.showBg}
 >
-	<div
-		class={config.showBg ? 'container blurred' : ''}
-		style="--blur-radius: {config.blur}px; --bg: {config.bgColor}; --border-width: {1 /
-			devicePixelRatio}px;"
-	>
+	<div class={config.showBg ? 'container blurred' : ''}>
 		<div on:dblclick={handleShowSettings}>
 			<Digits {...config} {ts} />
 		</div>
@@ -179,8 +175,9 @@
 				<button on:click={onDelete}>Delete</button>
 			{/if}
 
-			<span style="font-size: xx-small; color: #33333366; float: right;"
-				>Double-click the clock to close.</span
+			<span class="gray-text" style="font-size: xx-small; float: right;">
+				<div style="height: 0.5em" />
+				Double-click the clock to close.</span
 			>
 		{/if}
 	</div>
@@ -228,6 +225,9 @@
 			background: #eeeeee25;
 			color: #eeeeee25;
 		}
+		.gray-text {
+			color: #ffffff66;
+		}
 	}
 
 	@media (prefers-color-scheme: light) {
@@ -238,10 +238,13 @@
 			background: #11111111;
 			color: #11111111;
 		}
+		.gray-text {
+			color: #33333366;
+		}
 	}
 
 	.blurred {
-		backdrop-filter: blur(var(--blur-radius)) saturate(200%);
-		-webkit-backdrop-filter: blur(var(--blur-radius)) saturate(200%);
+		backdrop-filter: blur(32px) saturate(200%);
+		-webkit-backdrop-filter: blur(32px) saturate(200%);
 	}
 </style>
