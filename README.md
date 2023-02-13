@@ -38,16 +38,7 @@ Just have a try! https://charlie0129.github.io/aniclock
 - 12/24-hr clock
 - Show/Hide settings panel (double-click the clock)
 - Show/Hide seconds/milliseconds
-- Custom update/calibration interval
-
-<details>
-<summary>What is update/calibration interval?</summary>
-
-- _Update_: update the digits on screen, i.e. let the anime girls show current time.
-- _Update interval_: how often an _update_ happens. The default 1000ms is sufficient if you don't have milliseconds shown.
-- _Calibration_: make a certain _update_ as close to the beginning of each second as possible to improve perceived accuracy (only useful when milliseconds is hidden). Why do this? Let's take a example. We assume the digits are actually updated at `09:41:00.863`, but you can only see `09:41:00` and you will probably assume it is exactly `09:41:00.000`. See? That not correct. There is a 863ms difference. But if we update the digits as close to the beginning of each second as possible (e.g. `09:41:00.023`), well, that's much more close to what you see (`09:41:00`).
-- _Calibration interval_: how often a _calibration_ happens. Since the actual _update interval_ is not always the same due to JavaScript nature, so the moment when an _update_ happens will slowly drift away from the beginning of each second. So we need regular _calibration_.
-</details>
+- Custom update interval (when showing milliseconds)
 
 ## Possible use case
 

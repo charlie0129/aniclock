@@ -6,7 +6,6 @@ export interface ClockConfig {
 	showBg: boolean;
 	tz: number;
 	updateInterval: number;
-	calibrateInterval: number;
 	right: number;
 	top: number;
 	showSettings: boolean;
@@ -20,7 +19,6 @@ export const defaultClockConfig: ClockConfig = {
 	variant: 's-animated',
 	tz: -new Date().getTimezoneOffset() / 60,
 	updateInterval: 1_000, // 1s
-	calibrateInterval: 600, // 600s
 	right: 0,
 	top: 0,
 	showSettings: true,

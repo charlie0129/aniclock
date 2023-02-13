@@ -10,11 +10,12 @@
 	const cols: number = Math.floor(vw / 500);
 	const rows: number = Math.floor(vh / 300);
 
-	config = JSON.parse(localStorage.getItem('aniclock-config')) || defaultConfig;
+	config = JSON.parse(localStorage.getItem('aniclock-config') || 'null') || defaultConfig;
 	if (moveOutOfBoundaryClocks()) {
 		handleConfigChange();
 	}
 
+	// Just some very basic initial location.
 	function handleAddClock() {
 		const idx = config.clockConfigs.length;
 		config.clockConfigs.push({

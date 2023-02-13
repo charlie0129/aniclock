@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { ClockConfig } from './clockConfig';
 	import Digits from './Digits.svelte';
-	import { atLeastFullSecond } from './util';
 	import Draggable from './Draggable.svelte';
 
 	export let config: ClockConfig;
@@ -16,39 +15,17 @@
 		ts = Date.now();
 	};
 
-	let updateTimerId;
-	let onGoing = false;
+	let updateTimerId: NodeJS.Timer;
 	handleChangeInterval();
 
 	async function handleChangeInterval() {
 		if (config.updateInterval <= 0) {
 			clearInterval(updateTimerId);
-			updateTimerId = undefined;
 			return;
-		}
-		if (onGoing) {
-			return;
-		}
-		onGoing = true;
-		if (config.updateInterval >= 1000) {
-			// Calibrate to the beginning of a second.
-			await atLeastFullSecond();
 		}
 		clearInterval(updateTimerId);
-		updateTimerId = setInterval(updateTs, config.updateInterval);
-		onGoing = false;
-	}
-
-	let calibrateTimerId;
-	handleChangeCalibrateInterval();
-
-	function handleChangeCalibrateInterval() {
-		clearInterval(calibrateTimerId);
-		if (config.calibrateInterval <= 0) {
-			calibrateTimerId = undefined;
-			return;
-		}
-		calibrateTimerId = setInterval(handleChangeInterval, config.calibrateInterval * 1000);
+		// When not showing milliseconds, always use 100ms interval
+		updateTimerId = setInterval(updateTs, config.showMilliseconds ? config.updateInterval : 100);
 	}
 
 	function handleShowSettings() {
@@ -104,6 +81,9 @@
 						type="checkbox"
 						bind:checked={config.showMilliseconds}
 						disabled={!config.showSeconds}
+						on:change={() => {
+							handleChangeInterval();
+						}}
 					/>
 				</p>
 
@@ -117,8 +97,8 @@
 					<input
 						type="number"
 						bind:value={config.zoom}
-						min="0.5"
-						max="4"
+						min="0.25"
+						max="8"
 						step="0.5"
 						style="width: 80px;"
 					/>x
@@ -135,37 +115,22 @@
 					/>hours
 				</p>
 
-				<p>
-					<label>Update interval:</label>
-					<input
-						type="number"
-						bind:value={config.updateInterval}
-						on:change={handleChangeInterval}
-						min="0"
-						max="60_000"
-						style="width: 80px;"
-					/>ms (0 = never)
-				</p>
-
-				{#if config.updateInterval >= 1000}
+				{#if config.showMilliseconds}
 					<p>
-						<label>Calibration interval:</label>
+						<label>Update interval:</label>
 						<input
 							type="number"
-							bind:value={config.calibrateInterval}
-							on:change={handleChangeCalibrateInterval}
-							min="0"
+							bind:value={config.updateInterval}
+							on:change={handleChangeInterval}
+							min="1"
+							max="1_000"
 							style="width: 80px;"
-						/>s (0 = never)
+						/>ms
 					</p>
 				{/if}
 			</form>
 
 			<hr />
-
-			{#if config.updateInterval >= 1000}
-				<button on:click={handleChangeInterval}>Calibrate</button>
-			{/if}
 
 			{#if showAdd}
 				<button on:click={onAdd}>Add</button>
