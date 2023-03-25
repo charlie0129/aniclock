@@ -97,7 +97,7 @@
 					<input
 						type="number"
 						bind:value={config.zoom}
-						min="0.25"
+						min="0.5"
 						max="8"
 						step="0.5"
 						style="width: 80px;"
@@ -183,7 +183,7 @@
 
 	@media (prefers-color-scheme: dark) {
 		.container {
-			background: #33333380;
+			background: #30303077;
 			box-shadow: inset 0 0 0 1px #eeeeee25;
 		}
 		hr {
@@ -193,11 +193,19 @@
 		.gray-text {
 			color: #ffffff66;
 		}
+		/* Saturate is for some very rough sRGB to P3 conversion. Aniclock
+		  gets its background in sRGB. However, macOS UI uses P3 (if your display
+		  supports it, which is usually the case). To keep the background
+		  color of Aniclock similar to macOS UI, we need to make it more saturate. */
+		.blurred {
+		backdrop-filter: blur(32px) saturate(160%) brightness(90%);
+		-webkit-backdrop-filter: blur(32px) saturate(160%) brightness(90%);
+	}
 	}
 
 	@media (prefers-color-scheme: light) {
 		.container {
-			background: #e9e9e990;
+			background: #e9e9e99f;
 		}
 		hr {
 			background: #11111111;
@@ -206,10 +214,13 @@
 		.gray-text {
 			color: #33333366;
 		}
+		.blurred {
+		/* Saturate is for some very rough sRGB to P3 conversion. Aniclock
+		  gets its background in sRGB. However, macOS UI uses P3 (if your display
+		  supports it, which is usually the case). To keep the background
+		  color of Aniclock similar to macOS UI, we need to make it more saturate. */
+		backdrop-filter: blur(32px) saturate(150%) brightness(110%);
+		-webkit-backdrop-filter: blur(32px) saturate(150%) brightness(110%);
 	}
-
-	.blurred {
-		backdrop-filter: blur(32px) saturate(200%);
-		-webkit-backdrop-filter: blur(32px) saturate(200%);
 	}
 </style>
