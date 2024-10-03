@@ -55,3 +55,5 @@ Now you are good to go!
 ---
 
 > Note: all the pictures of digits (except the colons) are from [gelbooru](https://gelbooru.com), [konachan](https://konachan.com), and [lolibooru](https://lolibooru.moe).
+>
+> All credits belArtist the original artist 日下こかげ (Kusaka Kokage) @K_KOKAGE on Twitter/X
